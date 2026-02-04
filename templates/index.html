@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <!-- Manrope Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <title>Motor Fault Diagnosis</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Manrope", sans-serif;
+        }
+
+        body {
+            height: 100vh;
+            background: linear-gradient(135deg, #f6f8fb, #eef1f5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .card {
+            background: white;
+            width: 380px;
+            padding: 35px;
+            border-radius: 16px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.08);
+        }
+
+        h1 {
+            font-size: 22px;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            text-align: center;
+            font-size: 13px;
+            color: #777;
+            margin-bottom: 28px;
+        }
+
+        .input-group {
+            margin-bottom: 16px;
+        }
+
+        label {
+            font-size: 13px;
+            color: #555;
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px 12px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            font-size: 14px;
+            transition: 0.2s;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37,99,235,0.1);
+        }
+
+        /* -------------------
+   Gradient Glow Button
+------------------- */
+
+button {
+    position: relative;
+    width: 100%;
+    margin-top: 14px;
+    padding: 12px;
+    border-radius: 10px;
+    border: none;
+    font-size: 14px;
+    font-weight: 600;
+    background: #000;
+    color: white;
+    cursor: pointer;
+    z-index: 1;
+    overflow: hidden;
+}
+
+/* rotating gradient layer */
+button::before {
+    content: "";
+    position: absolute;
+    inset: -2px;
+    background: conic-gradient(
+        #2563eb,
+        #9333ea,
+        #06b6d4,
+        #2563eb
+    );
+    border-radius: 12px;
+    animation: rotate 3s linear infinite;
+    z-index: -2;
+}
+
+/* inner black layer */
+button::after {
+    content: "";
+    position: absolute;
+    inset: 2px;
+    background: #000;
+    border-radius: 8px;
+    z-index: -1;
+}
+
+@keyframes rotate {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+button:hover {
+    transform: translateY(-1px);
+}
+
+
+        button:hover {
+            background: #1e4fd8;
+        }
+
+        .result {
+            margin-top: 22px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 15px;
+            padding: 10px;
+            border-radius: 8px;
+        }
+
+        .normal {
+            background: #e8f7ee;
+            color: #15803d;
+        }
+
+        .fault {
+            background: #fdecec;
+            color: #b91c1c;
+        }
+
+        .footer {
+            text-align: center;
+            font-size: 11px;
+            color: #aaa;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="card">
+
+        <h1>🔧 Predictive Maintenance</h1>
+        <div class="subtitle">Motor Fault Diagnosis System</div>
+
+        <form action="/predict" method="post">
+
+            <div class="input-group">
+                <label>Current (A)</label>
+                <input type="number" step="any" name="current" placeholder="e.g. 10.5" required>
+            </div>
+
+            <div class="input-group">
+                <label>Vibration (mm/s)</label>
+                <input type="number" step="any" name="vibration" placeholder="e.g. 2.1" required>
+            </div>
+
+            <div class="input-group">
+                <label>Temperature (°C)</label>
+                <input type="number" step="any" name="temperature" placeholder="e.g. 40" required>
+            </div>
+
+            <button type="submit">Predict Condition</button>
+
+        </form>
+
+        {% if prediction_text %}
+            {% if "Fault" in prediction_text %}
+                <div class="result fault">{{ prediction_text }}</div>
+            {% else %}
+                <div class="result normal">{{ prediction_text }}</div>
+            {% endif %}
+        {% endif %}
+
+        <div class="footer">
+            ML + IoT Predictive Fault Detection
+        </div>
+
+    </div>
+
+</body>
+</html>
