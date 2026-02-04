@@ -73,10 +73,9 @@
             box-shadow: 0 0 0 3px rgba(37,99,235,0.1);
         }
 
-        /* -------------------
-   Gradient Glow Button
+       /* -------------------
+   Gradient Glow Button with Blurred Border
 ------------------- */
-
 button {
     position: relative;
     width: 100%;
@@ -93,20 +92,25 @@ button {
     overflow: hidden;
 }
 
-/* rotating gradient layer */
+/* blurred gradient glow behind the button */
 button::before {
     content: "";
     position: absolute;
-    inset: -2px;
+    inset: -4px;
     background: conic-gradient(
         #2563eb,
         #9333ea,
         #06b6d4,
+        #4ade80,
+        #fbbf24,
+        #f87171,
         #2563eb
     );
-    border-radius: 12px;
+    border-radius: 14px;
     animation: rotate 3s linear infinite;
     z-index: -2;
+    filter: blur(8px);
+    opacity: 0.8;
 }
 
 /* inner black layer */
@@ -128,10 +132,10 @@ button:hover {
     transform: translateY(-1px);
 }
 
-
-        button:hover {
-            background: #1e4fd8;
-        }
+button:hover::before {
+    filter: blur(10px);
+    opacity: 0.9;
+}
 
         .result {
             margin-top: 22px;
